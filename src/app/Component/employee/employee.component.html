@@ -1,0 +1,161 @@
+
+<div class="container">
+    <h1>Employee Management</h1>
+  
+    <!-- Add Employee Form -->
+    <div class="card mb-3">
+      <div class="card-header">Add Employee</div>
+      <div class="card-body">
+        <form (ngSubmit)="addEmployee()">
+          <div class="form-group">
+            <label for="firstName">First Name</label>
+            <input
+              type="text"
+              id="firstName"
+              [(ngModel)]="employeeRequest.firstName"
+              name="firstName"
+              class="form-control"
+            />
+          </div>
+          <div class="form-group">
+            <label for="lastName">Last Name</label>
+            <input
+              type="text"
+              id="lastName"
+              [(ngModel)]="employeeRequest.lastName"
+              name="lastName"
+              class="form-control"
+            />
+          </div>
+          <div class="form-group">
+            <label for="position">Position</label>
+            <input
+              type="text"
+              id="position"
+              [(ngModel)]="employeeRequest.position"
+              name="position"
+              class="form-control"
+            />
+          </div>
+          <div class="form-group">
+            <label for="age">Age</label>
+            <input
+              type="number"
+              id="age"
+              [(ngModel)]="employeeRequest.age"
+              name="age"
+              class="form-control"
+            />
+          </div>
+          <div class="form-group">
+            <label for="salary">Salary</label>
+            <input
+              type="number"
+              id="salary"
+              [(ngModel)]="employeeRequest.salary"
+              name="salary"
+              class="form-control"
+            />
+          </div>
+          <div class="form-group">
+            <label for="gender">Gender</label>
+            <select
+              id="gender"
+              [(ngModel)]="employeeRequest.gender"
+              name="gender"
+              class="form-control"
+            >
+              <option [value]="null">Select Gender</option>
+              <option *ngFor="let gender of employeeRequest.gender" [value]="gender">{{ gender }}</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="departure">Departure</label>
+            <select
+              id="departure"
+              [(ngModel)]="employeeRequest.departure"
+              name="departure"
+              class="form-control"
+            >
+              <option [value]="null">Select Departure</option>
+              <option *ngFor="let departure of employeeRequest.departure" [value]="departure">{{ departure }}</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="displine">Discipline</label>
+            <select
+              id="displine"
+              [(ngModel)]="employeeRequest.displine"
+              name="displine"
+              class="form-control"
+            >
+              <option [value]="null">Select Discipline</option>
+              <option *ngFor="let displine of employeeRequest.displine" [value]="displine">{{ displine }}</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="leaveType">Leave Type</label>
+            <select
+              id="leaveType"
+              [(ngModel)]="employeeRequest.leaveType"
+              name="leaveType"
+              class="form-control"
+            >
+              <option [value]="null">Select Leave Type</option>
+              <option *ngFor="let leaveType of employeeRequest.leaveType" [value]="leaveType">{{ leaveType }}</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="startDate">Start Date</label>
+            <input
+              type="date"
+              id="startDate"
+              [(ngModel)]="employeeRequest.startDate"
+              name="startDate"
+              class="form-control"
+            />
+          </div>
+          <div class="form-group">
+            <label for="endDate">End Date</label>
+            <input
+              type="date"
+              id="endDate"
+              [(ngModel)]="employeeRequest.endDate"
+              name="endDate"
+              class="form-control"
+            />
+          </div>
+          <button type="submit" class="btn btn-primary">Add Employee</button>
+        </form>
+      </div>
+    </div>
+
+  
+    <!-- Employee List -->
+    <div class="card">
+      <div class="card-header">Employee List</div>
+      <div class="card-body">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>First Name</th>
+              <th>Last Name</th>
+              <th>Position</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let employee of employees">
+              <td>{{ employee.id }}</td>
+              <td>{{ employee.firstName }}</td>
+              <td>{{ employee.lastName }}</td>
+              <td>{{ employee.position }}</td>
+
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  

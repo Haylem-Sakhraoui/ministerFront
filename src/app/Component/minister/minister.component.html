@@ -1,0 +1,21 @@
+<div class="container">
+    <div class="card">
+      <div class="card-header">
+        <h2 class="text-center">Minister Management</h2>
+      </div>
+      <div class="card-body">
+  
+        <hr>
+  
+        <ul class="list-group">
+          <li class="list-group-item" *ngFor="let minister of ministers">
+            <div class="d-flex justify-content-between align-items-center">
+              <div>{{ minister.name }}</div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <app-employee></app-employee>
+  

@@ -1,18 +1,43 @@
 
-export interface EmployeeRequest { 
+// employee-request.model.ts
+
+export enum Departure {
+    DECES = 'DECES',
+    DEMISSION = 'DEMISSION',
+    RETRAITE = 'RETRAITE',
+    REVOCATION = 'REVOCATION'
+  }
+  
+  export enum Displine {
+    BLAME = 'BLAME',
+    AVERTISSEMENT = 'AVERTISSEMENT',
+    REVOCATION = 'REVOCATION'
+  }
+  
+  export enum LeaveType {
+    MALADIE = 'MALADIE',
+    LONG_DUREE = 'LONG_DUREE',
+    MATERNITE = 'MATERNITE'
+  }
+  export enum Gender {
+    Homme = 'Homme',
+    Femme = 'Femme',
+  }
+
+  export interface EmployeeRequest { 
+    id?: number;
     firstName?: string;
     lastName?: string;
     position?: string;
     age?: number;
     salary?: number;
-    gender?: EmployeeRequest.GenderEnum;
-}
-export namespace EmployeeRequest {
-    export type GenderEnum = 'Homme' | 'Femme';
-    export const GenderEnum = {
-        Homme: 'Homme' as GenderEnum,
-        Femme: 'Femme' as GenderEnum
-    };
-}
-
+    gender?: Gender;
+    departure?: Departure;
+    displine?: Displine;
+    leaveType?: LeaveType;
+    startDate?: Date; 
+    endDate?: Date; 
+  
+  }
+  
 

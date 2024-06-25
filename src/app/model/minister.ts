@@ -1,10 +1,10 @@
-import { Employee } from './employee';
+import { employer } from './employee';
 
 
 export interface Minister { 
     id?: number;
     name?: Minister.NameEnum;
-    employees?: Set<Employee>;
+    employees?: Set<employer>;
 }
 export namespace Minister {
     export type NameEnum = 'HEALTH' | 'EDUCATION' | 'AGRICULTURE' | 'DEFENSE' | 'TOURISM' | 'JUSTICE';

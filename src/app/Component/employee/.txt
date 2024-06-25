@@ -1,0 +1,271 @@
+// employee.component.ts
+
+import { Component, OnInit } from '@angular/core';
+import { EmployeeService } from '../../Services/Employee/employee.service';
+import { Employee } from '../../model/employee';
+import { EmployeeRequest } from '../../model/employeeRequest';
+
+
+@Component({
+  selector: 'app-employee',
+  templateUrl: './employee.component.html',
+  styleUrls: ['./employee.component.css']
+})
+export class EmployeeComponent implements OnInit {
+  employees: Employee[] = [];
+  selectedEmployee: Employee | null = null;
+  employeeRequest: EmployeeRequest = {};
+
+  constructor(private employeeService: EmployeeService) {}
+
+  ngOnInit(): void {
+    this.getAllEmployees();
+  }
+
+  getAllEmployees(): void {
+    this.employeeService.getAllEmployees().subscribe(
+      (data: Employee[]) => {
+        this.employees = data;
+      },
+      (error) => {
+        console.error('Error fetching employees', error);
+      }
+    );
+  }
+
+  getEmployeeById(id: number): void {
+    this.employeeService.getEmployeeById(id).subscribe(
+      (data: Employee) => {
+        this.selectedEmployee = data;
+      },
+      (error) => {
+        console.error('Error fetching employee', error);
+      }
+    );
+  }
+
+  addEmployee(): void {
+    this.employeeService.addEmployee(this.employeeRequest).subscribe(
+      (data: Employee) => {
+        this.employees.push(data);
+        this.employeeRequest = {}; // Reset the form
+      },
+      (error) => {
+        console.error('Error adding employee', error);
+      }
+    );
+  }
+
+  updateEmployee(id: number): void {
+    this.employeeService.updateEmployee(id, this.employeeRequest).subscribe(
+      (data: Employee) => {
+        const index = this.employees.findIndex(emp => emp.id === id);
+        if (index !== -1) {
+          this.employees[index] = data;
+        }
+        this.selectedEmployee = null;
+      },
+      (error) => {
+        console.error('Error updating employee', error);
+      }
+    );
+  }
+
+  deleteEmployee(id: number): void {
+    this.employeeService.deleteEmployee(id).subscribe(
+      () => {
+        this.employees = this.employees.filter(emp => emp.id !== id);
+      },
+      (error) => {
+        console.error('Error deleting employee', error);
+      }
+    );
+  }
+
+  selectEmployee(employee: EmployeeRequest): void {
+    this.selectedEmployee = employee;
+    this.employeeRequest = { 
+      firstName: employee.firstName,
+      lastName: employee.lastName,
+      position: employee.position,
+      age: employee.age,
+      salary: employee.salary,
+      gender: employee.gender,
+      departure: employee.departure,
+      displine: employee.displine,
+      leaveType: employee.leaveType,
+      startDate: employee.startDate,
+      endDate: employee.endDate
+    };
+  }
+
+  clearSelection(): void {
+    this.selectedEmployee = null;
+    this.employeeRequest = {};
+  }
+}
+
+
+
+//////////html////////////
+
+<div class="container">
+    <h1>Employee Management</h1>
+  
+    <!-- Add Employee Form -->
+    <div class="card mb-3">
+      <div class="card-header">Add Employee</div>
+      <div class="card-body">
+        <form (ngSubmit)="addEmployee()">
+          <div class="form-group">
+            <label for="firstName">First Name</label>
+            <input
+              type="text"
+              id="firstName"
+              [(ngModel)]="employeeRequest.firstName"
+              name="firstName"
+              class="form-control"
+            />
+          </div>
+          <div class="form-group">
+            <label for="lastName">Last Name</label>
+            <input
+              type="text"
+              id="lastName"
+              [(ngModel)]="employeeRequest.lastName"
+              name="lastName"
+              class="form-control"
+            />
+          </div>
+          <div class="form-group">
+            <label for="position">Position</label>
+            <input
+              type="text"
+              id="position"
+              [(ngModel)]="employeeRequest.position"
+              name="position"
+              class="form-control"
+            />
+          </div>
+          <div class="form-group">
+            <label for="age">Age</label>
+            <input
+              type="number"
+              id="age"
+              [(ngModel)]="employeeRequest.age"
+              name="age"
+              class="form-control"
+            />
+          </div>
+          <div class="form-group">
+            <label for="salary">Salary</label>
+            <input
+              type="number"
+              id="salary"
+              [(ngModel)]="employeeRequest.salary"
+              name="salary"
+              class="form-control"
+            />
+          </div>
+          <div class="form-group">
+            <label for="gender">Gender</label>
+            <select
+              id="gender"
+              [(ngModel)]="employeeRequest.gender"
+              name="gender"
+              class="form-control"
+            >
+              <option [value]="null">Select Gender</option>
+              <option *ngFor="let gender of employeeRequest.gender" [value]="gender">{{ gender }}</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="departure">Departure</label>
+            <select
+              id="departure"
+              [(ngModel)]="employeeRequest.departure"
+              name="departure"
+              class="form-control"
+            >
+              <option [value]="null">Select Departure</option>
+              <option *ngFor="let departure of employeeRequest.departure" [value]="departure">{{ departure }}</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="displine">Discipline</label>
+            <select
+              id="displine"
+              [(ngModel)]="employeeRequest.displine"
+              name="displine"
+              class="form-control"
+            >
+              <option [value]="null">Select Discipline</option>
+              <option *ngFor="let displine of employeeRequest.displine" [value]="displine">{{ displine }}</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="leaveType">Leave Type</label>
+            <select
+              id="leaveType"
+              [(ngModel)]="employeeRequest.leaveType"
+              name="leaveType"
+              class="form-control"
+            >
+              <option [value]="null">Select Leave Type</option>
+              <option *ngFor="let leaveType of employeeRequest.leaveType" [value]="leaveType">{{ leaveType }}</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="startDate">Start Date</label>
+            <input
+              type="date"
+              id="startDate"
+              [(ngModel)]="employeeRequest.startDate"
+              name="startDate"
+              class="form-control"
+            />
+          </div>
+          <div class="form-group">
+            <label for="endDate">End Date</label>
+            <input
+              type="date"
+              id="endDate"
+              [(ngModel)]="employeeRequest.endDate"
+              name="endDate"
+              class="form-control"
+            />
+          </div>
+          <button type="submit" class="btn btn-primary">Add Employee</button>
+        </form>
+      </div>
+    </div>
+
+  
+    <!-- Employee List -->
+    <div class="card">
+      <div class="card-header">Employee List</div>
+      <div class="card-body">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>First Name</th>
+              <th>Last Name</th>
+              <th>Position</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let employee of employees">
+              <td>{{ employee.id }}</td>
+              <td>{{ employee.firstName }}</td>
+              <td>{{ employee.lastName }}</td>
+              <td>{{ employee.position }}</td>
+
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  

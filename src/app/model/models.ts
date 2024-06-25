@@ -14,3 +14,4 @@ export * from './ministerRequest';
 export * from './registerRequest';
 export * from './resetPasswordRequest';
 export * from './token';
+export { Departure, Displine, Gender, LeaveType } from './employee';
